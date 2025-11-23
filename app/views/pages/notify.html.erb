@@ -1,0 +1,11 @@
+<h1>Notification Test Zone</h1>
+
+<div data-controller="push-subscription"
+     data-push-subscription-vapid-public-value="<%= Rails.application.credentials.vapid.public_key %>"
+     data-push-subscription-post-url-value="<%= push_subscriptions_path %>">
+
+  <button data-action="push-subscription#subscribe" class="my-button-class">
+    Turn on Notifications
+  </button>
+
+</div>
