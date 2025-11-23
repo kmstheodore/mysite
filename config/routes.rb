@@ -15,4 +15,5 @@ Rails.application.routes.draw do
   get "about" => "pages#about"
   get "notify" => "pages#notify"
   post "push_subscriptions" => "push_subscriptions#create"
+  post "test_notification", to: "push_subscriptions#test_send"
 end
