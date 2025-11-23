@@ -1,26 +1,27 @@
-// Add a service worker for processing Web Push notifications:
-//
-// self.addEventListener("push", async (event) => {
-//   const { title, options } = await event.data.json()
-//   event.waitUntil(self.registration.showNotification(title, options))
-// })
-//
-// self.addEventListener("notificationclick", function(event) {
-//   event.notification.close()
-//   event.waitUntil(
-//     clients.matchAll({ type: "window" }).then((clientList) => {
-//       for (let i = 0; i < clientList.length; i++) {
-//         let client = clientList[i]
-//         let clientPath = (new URL(client.url)).pathname
-//
-//         if (clientPath == event.notification.data.path && "focus" in client) {
-//           return client.focus()
-//         }
-//       }
-//
-//       if (clients.openWindow) {
-//         return clients.openWindow(event.notification.data.path)
-//       }
-//     })
-//   )
-// })
+// 1. Listen for the Push event
+self.addEventListener("push", async (event) => {
+    // The server sends JSON. We parse it here.
+    const data = event.data.json();
+
+    const options = {
+        body: data.body,
+        icon: "/icon.png", // Ensure you have an icon in /public
+        data: { url: data.url } // We stash the URL here to use it later
+    };
+
+    // This keeps the worker alive until the notification is actually shown
+    event.waitUntil(
+        self.registration.showNotification(data.title, options)
+    );
+});
+
+// 2. Listen for the Click event
+self.addEventListener("notificationclick", (event) => {
+    // Close the notification immediately
+    event.notification.close();
+
+    // Open the URL we stashed in the data object above
+    event.waitUntil(
+        clients.openWindow(event.notification.data.url)
+    );
+});
