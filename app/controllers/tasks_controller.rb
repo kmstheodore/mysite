@@ -11,7 +11,7 @@ class TasksController < ApplicationController
     @task = current_user.tasks.build(task_params)
 
     if @task.save
-      redirect_to @task, notice: 'Task was successfully created.'
+      redirect_to tasks_path, notice: 'Task was successfully created.'
     else
       render :new
     end
