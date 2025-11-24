@@ -20,6 +20,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :strike)
+    # Add :complete to the list
+    params.require(:task).permit(:name, :strike, :complete)
   end
 end
