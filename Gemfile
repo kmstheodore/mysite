@@ -64,4 +64,4 @@ end
 
 gem "devise", "~> 4.9"
 
-gem "solid_queue", "~> 1.2"
+gem "solid_queue", "~> 1.3"
